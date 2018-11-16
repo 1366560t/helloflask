@@ -7,8 +7,11 @@
 """
 import click
 from flask import Flask
+# from flask_script import Manager
 
 app = Flask(__name__)
+# # 把 Manager 类和应用程序实例进行关联
+# manager = Manager(app)
 
 
 # the minimal Flask application
@@ -32,7 +35,12 @@ def greet(name):
 
 
 # custom flask cli command
+# 自定义命令
 @app.cli.command()
 def hello():
     """Just say hello."""
     click.echo('Hello, Human!')
+
+
+# if __name__ == "__main__":
+#     manager.run()
