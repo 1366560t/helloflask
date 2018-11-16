@@ -100,7 +100,7 @@ ENV/
 # mypy
 .mypy_cache/
 
-# PyCharm
+# PyCharm忽略文件
 .idea
 
 # Sphinx
