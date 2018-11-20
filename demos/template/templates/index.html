@@ -1,4 +1,6 @@
+{# extends标签声明扩展基模板 告诉模板引擎当前模板派生自base.htm #}
 {% extends 'base.html' %}
+{# 使用import语句导入宏 #}
 {% from 'macros.html' import qux %}
 
 {% block content %}

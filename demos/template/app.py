@@ -10,9 +10,12 @@ from flask import Flask, render_template, flash, redirect, url_for, Markup
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'secret string')
+# 用来删除Jinja2语句后的第一个空行
 app.jinja_env.trim_blocks = True
+# 用来删除Jinja2语句所在行之前的空格和制表符
 app.jinja_env.lstrip_blocks = True
 
+# 创建虚拟数据
 user = {
     'username': 'Grey Li',
     'bio': 'A boy who loves movies and music.',
@@ -43,25 +46,29 @@ def index():
 
 
 # register template context handler
+# 注册模板上下文处理函数
 @app.context_processor
 def inject_info():
     foo = 'I am foo.'
-    return dict(foo=foo)  # equal to: return {'foo': foo}
+    return dict(foo=foo)  # equal to等同于: return {'foo': foo}
 
 
 # register template global function
+# 注册模板全局函数
 @app.template_global()
 def bar():
     return 'I am bar.'
 
 
 # reigster template filter
+# 添加自定义过滤器
 @app.template_filter()
 def musical(s):
-    return s + Markup(' &#9835;')
+    return s + Markup(' &#9835;')  # 将变量转换为Markup对象 用Markup类将它标记为安全字符
 
 
 # register template test
+# 自定义测试器
 @app.template_test()
 def baz(n):
     if n == 'baz':
@@ -74,14 +81,15 @@ def watchlist_with_static():
     return render_template('watchlist_with_static.html', user=user, movies=movies)
 
 
-# message flashing
+# message flashing 闪现
 @app.route('/flash')
 def just_flash():
-    flash('I am flash, who is looking for me?')
+    flash(u'I am flash, who is looking for me?你好，我是闪电。')  # Python 2.x中在字符串前添加u前缀
     return redirect(url_for('index'))
 
 
 # 404 error handler
+# 自定义错误页面
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('errors/404.html'), 404

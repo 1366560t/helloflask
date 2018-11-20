@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+{# 块的开始和结束分别使用block和endblock标签声明 #}
     {% block head %}
         <meta charset="utf-8">
         <title>{% block title %}Template - HelloFlask{% endblock %}</title>
+        {# 为Web项目添加Favicon收藏夹头像/网站头像 #}
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
         {% block styles %}
+            {# 在模板中加载 存储CSS规则的styles.css文件 #}
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css' ) }}">
         {% endblock %}
     {% endblock %}
@@ -16,6 +19,8 @@
 </nav>
 
 <main>
+{# 使用全局函数get_flashed_messages（）获取存储在session中的闪现 #}
+{# 可能包含多条所以使用for循环迭代get_flashed_message（） #}
     {% for message in get_flashed_messages() %}
         <div class="alert">{{ message }}</div>
     {% endfor %}

@@ -43,7 +43,7 @@ ckeditor = CKEditor(app)
 dropzone = Dropzone(app)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])  # methods参数传入一个包含监听的HTTP方法的可迭代对象
 def index():
     return render_template('index.html')
 
@@ -62,9 +62,9 @@ def html():
 def basic():
     form = LoginForm()
     if form.validate_on_submit():
-        username = form.username.data
+        username = form.username.data  # 处理了所有请求方法
         flash('Welcome home, %s!' % username)
-        return redirect(url_for('index'))
+        return redirect(url_for('index'))  # PRG
     return render_template('basic.html', form=form)
 
 
