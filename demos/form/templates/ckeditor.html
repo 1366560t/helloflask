@@ -1,3 +1,4 @@
+{# 渲染包含CKEditor编辑器的表单 #}
 {% extends 'base.html' %}
 {% from 'macros.html' import form_field %}
 
@@ -15,5 +16,7 @@
 {% block scripts %}
     {{ super() }}
     {{ ckeditor.load() }}
+    {# 使用配置变量设置了编辑器的高度、宽度和语言或是其他插件配置
+    ，需要使用ckeditor.config（）方法加载配置 #}
     {{ ckeditor.config(name='body') }}
 {% endblock %}

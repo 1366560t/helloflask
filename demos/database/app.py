@@ -18,9 +18,9 @@ from wtforms.validators import DataRequired
 
 # sqlite URI compatible
 WIN = sys.platform.startswith('win')
-if WIN:
+if WIN:  # 在Windows系统下的URI中的斜线数量为3个
     prefix = 'sqlite:///'
-else:
+else:  # SQLite的数据库URI在Linux或macOS系统下的斜线数量是4个
     prefix = 'sqlite:////'
 
 app = Flask(__name__)
@@ -29,7 +29,10 @@ app.jinja_env.lstrip_blocks = True
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'secret string')
 
+# 数据库的URI通过配置变量SQLALCHEMY_DATABASE_URI设置
+# 用app.root_path来定位数据库文件的路径，并将数据库文件命名为data.db
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', prefix + os.path.join(app.root_path, 'data.db'))
+# 事件通知系统  决定是否追踪对象的修改
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -43,13 +46,13 @@ def make_shell_context():
                 Country=Country, Teacher=Teacher, Student=Student, Post=Post, Comment=Comment, Draft=Draft)
 
 
-@app.cli.command()
+@app.cli.command()  # 自定义flask命令
 @click.option('--drop', is_flag=True, help='Create after drop.')
 def initdb(drop):
-    """Initialize the database."""
+    """Initialize the database.初始化数据库"""
     if drop:
-        db.drop_all()
-    db.create_all()
+        db.drop_all()  # 调用db.drop_all（）方法删除数据库和表
+    db.create_all()  # 调用db.create_all（）方法创建
     click.echo('Initialized database.')
 
 
@@ -68,12 +71,14 @@ class DeleteNoteForm(FlaskForm):
     submit = SubmitField('Delete')
 
 
-# Models
+# Models  定义Note模型
 class Note(db.Model):
+    # 表的字段（列）由db.Column类的实例表示  db.Integer的id字段  存储整型
     id = db.Column(db.Integer, primary_key=True)
+    # 类型为db.Text的body列  存储文本
     body = db.Column(db.Text)
 
-    # optional
+    # optional  可选的  __repr__（）方法会返回一条类似“<模型类名主键值>”的字符串
     def __repr__(self):
         return '<Note %r>' % self.body
 

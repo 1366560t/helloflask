@@ -3,9 +3,9 @@
 {% block content %}
 <h2>Pure HTML Form</h2>
 
-<form method="post">
-    <label for="username">Username</label><br>
-    <input type="text" name="username" placeholder="Héctor Rivera"><br>
+<form method="post">  {#  表单通过<form>标签创建 #}
+    <label for="username">Username</label><br>  {# <label>标签则用来定义字段的标签文字 #}
+    <input type="text" name="username" placeholder="Héctor Rivera"><br>  {# 创建<input>标签表示各种输入字段 #}
     <label for="password">Password</label><br>
     <input type="password" name="password" placeholder="19001130"><br>
     <input id="remember" name="remember" type="checkbox" checked>

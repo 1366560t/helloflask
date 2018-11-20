@@ -3,8 +3,9 @@
 {% block content %}
 <h2>Basic Form</h2>
 
+{# 渲染错误消息 #}
 <form method="post">
-    {{ form.csrf_token }}
+    {{ form.csrf_token }} <!-- 渲染CSRF令牌隐藏字段 -->
     {{ form.username.label }}<br>
     {{ form.username }}<br>
     {% if form.username.errors %}
